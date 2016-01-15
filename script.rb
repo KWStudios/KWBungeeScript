@@ -7,7 +7,8 @@ require 'dm-serializer'
 require 'dm-types'
 require 'json'
 
-require_relative './minigame_creator'
+require_relative 'minigame_creator'
+require_relative 'server_model'
 
 type = ENV['GAME_TYPE']
 map = ENV['MAP_NAME']
