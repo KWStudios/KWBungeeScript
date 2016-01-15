@@ -36,3 +36,6 @@ build/
 
 # OSX specific files
 .DS_Store
+
+# Sensitive data
+json/
