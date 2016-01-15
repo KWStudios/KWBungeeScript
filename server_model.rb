@@ -15,7 +15,7 @@ class MinecraftServer
   property :name,       String, required: true, length: 255, key: true
   property :server,     String, required: true, length: 255
   property :number,     Integer, required: true
-  property :is_used,    Boolean, require: true
+  property :is_used,    Boolean, required: true
   property :created_at, DateTime
   property :updated_at, DateTime
 end
