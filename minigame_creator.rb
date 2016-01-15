@@ -59,5 +59,9 @@ class MinigameCreator
   def reset_server
     `rm -r #{@destination_path}/#{@server_name}/#{@map_name}`
     `rm -r #{@destination_path}/#{@server_name}/plugins/*`
+
+    minecraft_server = MinecraftServer.get(@server_name)
+    minecraft_server.is_used = false
+    minecraft_server.save
   end
 end
