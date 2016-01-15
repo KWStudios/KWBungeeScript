@@ -4,7 +4,7 @@ class MinigameCreator
     @server_name = server
     @map_name = map
 
-    @gsutil_cp = 'gsutil -m cp -r'
+    @gsutil_cp = 'gsutil cp -r'
     @bucket = 'gs://kwstudios-main-bucket'
 
     @destination_path = '/home/minecraft/bungeecord'
@@ -21,11 +21,11 @@ class MinigameCreator
   end
 
   def copy_map
-    `#{@gsutil_cp} #{@bucket}/minecraft/backup/worlds/minigames/archived/
-    #{@map_name}.zip #{@destination_path}/#{@server_name}/`
+    `#{@gsutil_cp} #{@bucket}/minecraft/backup/worlds/minigames/archived/#{
+    @map_name}.zip #{@destination_path}/#{@server_name}/`
 
-    `unzip #{@destination_path}/#{@server_name}/#{@map_name}.zip -d
-    #{@destination_path}/#{@server_name}/`
+    `unzip #{@destination_path}/#{@server_name}/#{@map_name}.zip -d #{
+    @destination_path}/#{@server_name}/`
 
     `rm #{@destination_path}/#{@server_name}/#{@map_name}.zip`
   end
