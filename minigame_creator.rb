@@ -11,13 +11,23 @@ class MinigameCreator
   end
 
   def copy_plugins(folder)
-    `#{@gsutil_cp} #{@bucket}/minecraft/plugins/minigames/#{folder}/* #{
+    `#{@gsutil_cp} #{@bucket}/minecraft/plugins/minigames/#{
+    folder}/plugins-backup.zip #{@destination_path}/#{@server_name}/plugins/`
+
+    `unzip #{@destination_path}/#{@server_name}/plugins/plugins-backup.zip -d #{
     @destination_path}/#{@server_name}/plugins/`
+
+    `rm #{@destination_path}/#{@server_name}/plugins/plugins-backup.zip`
   end
 
   def copy_map
-    `#{@gsutil_cp} #{@bucket}/minecraft/backup/worlds/minigames/#{@map_name} #{
-    @destination_path}/#{@server_name}/`
+    `#{@gsutil_cp} #{@bucket}/minecraft/backup/worlds/minigames/archived/
+    #{@map_name}.zip #{@destination_path}/#{@server_name}/`
+
+    `unzip #{@destination_path}/#{@server_name}/#{@map_name}.zip -d
+    #{@destination_path}/#{@server_name}/`
+
+    `rm #{@destination_path}/#{@server_name}/#{@map_name}.zip`
   end
 
   # rubocop:disable MethodLength
