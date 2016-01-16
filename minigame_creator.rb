@@ -52,6 +52,17 @@ class MinigameCreator
     end
   end
 
+  def save_json(type)
+    json_hash = { game_type: type, map_name: @map_name,
+                  server_name: @server_name }
+    json_string = JSON.generate(json_hash)
+
+    json_file = "#{@destination_path}/#{@server_name}/GameValues.json"
+    open(json_file, 'w') do |f|
+      f << json_string
+    end
+  end
+
   def start_server
     `#{@destination_path}/#{@server_name}/start.sh`
   end
@@ -59,6 +70,7 @@ class MinigameCreator
   def reset_server
     `rm -r #{@destination_path}/#{@server_name}/#{@map_name}`
     `rm -r #{@destination_path}/#{@server_name}/plugins/*`
+    `rm #{@destination_path}/#{@server_name}/GameValues.json`
 
     minecraft_server = MinecraftServer.get(@server_name)
     minecraft_server.is_used = false

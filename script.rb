@@ -21,6 +21,7 @@ if type == 'bedwars' || type == 'ragemode' || type == 'paintball' ||
   minigame_creator.copy_plugins(type)
   minigame_creator.copy_map
   minigame_creator.set_server_properties
+  minigame_creator.save_json(type)
   minigame_creator.start_server
   minigame_creator.reset_server
 
