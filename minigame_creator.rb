@@ -1,8 +1,10 @@
 # This class is responsible for the Minigame Server setup
+# encoding: utf-8
 class MinigameCreator
-  def initialize(server, map)
+  def initialize(server, map, type)
     @server_name = server
     @map_name = map
+    @game_type = type
 
     @gsutil_cp = 'gsutil cp -r'
     @bucket = 'gs://kwstudios-main-bucket'
@@ -20,7 +22,9 @@ class MinigameCreator
     `rm #{@destination_path}/#{@server_name}/plugins/plugins-backup.zip`
   end
 
+  # rubocop:disable MethodLength
   def copy_map
+    # Copy minigame map
     `#{@gsutil_cp} #{@bucket}/minecraft/backup/worlds/minigames/archived/#{
     @map_name}.zip #{@destination_path}/#{@server_name}/`
 
@@ -28,6 +32,16 @@ class MinigameCreator
     @destination_path}/#{@server_name}/`
 
     `rm #{@destination_path}/#{@server_name}/#{@map_name}.zip`
+
+    # Copy lobby map
+    lobby_map = "#{@game_type.capitalize}_Lobby"
+    `#{@gsutil_cp} #{@bucket}/minecraft/backup/worlds/minigames/archived/#{
+    lobby_map}.zip #{@destination_path}/#{@server_name}/`
+
+    `unzip #{@destination_path}/#{@server_name}/#{lobby_map}.zip -d #{
+    @destination_path}/#{@server_name}/`
+
+    `rm #{@destination_path}/#{@server_name}/#{lobby_map}.zip`
   end
 
   # rubocop:disable MethodLength
@@ -52,8 +66,8 @@ class MinigameCreator
     end
   end
 
-  def save_json(type)
-    json_hash = { game_type: type, map_name: @map_name,
+  def save_json
+    json_hash = { game_type: @game_type, map_name: @map_name,
                   server_name: @server_name }
     json_string = JSON.generate(json_hash)
 
@@ -69,6 +83,10 @@ class MinigameCreator
 
   def reset_server
     `rm -r #{@destination_path}/#{@server_name}/#{@map_name}`
+
+    lobby_map = "#{@game_type.capitalize}_Lobby"
+    `rm -r #{@destination_path}/#{@server_name}/#{lobby_map}`
+
     `rm -r #{@destination_path}/#{@server_name}/plugins/*`
     `rm #{@destination_path}/#{@server_name}/GameValues.json`
 
