@@ -38,5 +38,4 @@ build/
 .DS_Store
 
 # Sensitive data
-json/*
-json/db.json
+json/
