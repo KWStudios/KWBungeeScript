@@ -39,3 +39,4 @@ build/
 
 # Sensitive data
 json/*
+json/db.json
