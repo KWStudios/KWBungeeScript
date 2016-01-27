@@ -53,7 +53,8 @@ class MinigameCreator
       formatted_line = line.strip
       if formatted_line.start_with?('level-name')
         splitted_line = formatted_line.split('=', 2)
-        splitted_line[1] = @map_name
+        lobby_map = "#{@game_type.capitalize}_Lobby"
+        splitted_line[1] = lobby_map
         formatted_line = "#{splitted_line[0]}=#{splitted_line[1]}"
       end
       line_array << formatted_line
