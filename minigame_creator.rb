@@ -1,15 +1,23 @@
-# This class is responsible for the Minigame Server setup
 # encoding: utf-8
+
+# This class is responsible for the Minigame Server setup
 class MinigameCreator
-  def initialize(server, map, type)
+  # opts requires symbolized names. If you parse a json string, you can tell
+  # the library to symbolize the keys with the option symbolize_names: true
+  def initialize(server, map, type, opts = {})
     @server_name = server
     @map_name = map
     @game_type = type
 
-    @gsutil_cp = 'gsutil cp -r'
-    @bucket = 'gs://kwstudios-main-bucket'
+    lokal_path = opts.fetch(:lokal_path, false)
+    @gsutil_cp = lokal_path ? 'cp -r' : 'gsutil cp -r'
 
-    @destination_path = '/home/minecraft/bungeecord'
+    @bucket = opts.fetch(:bucket, 'gs://kwstudios-main-bucket')
+
+    @destination_path = opts.fetch(
+      :destination_path,
+      '/home/minecraft/bungeecord'
+    )
   end
 
   def copy_plugins(folder)
