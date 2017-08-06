@@ -18,7 +18,10 @@ logger.level = Logger::DEBUG
 options = nil
 begin
   logger.debug 'Started parsing options.json'
-  options = JSON.parse(open('./json/options.json').read, symbolize_names: true)
+  options = JSON.parse(
+    open("#{__dir__}/json/options.json").read,
+    symbolize_names: true
+  )
 rescue => e
   logger.fatal 'Could not parse the options file located at ./json/options.json'
   logger.fatal 'See the stacktrace for more information'
